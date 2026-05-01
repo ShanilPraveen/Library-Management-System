@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Library Management System</title>
+  
+  <!-- Content Security Policy - Security headers -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: localhost:*; script-src 'unsafe-inline' 'unsafe-eval' https: localhost:*; connect-src https: localhost:* ws://localhost:*; style-src 'unsafe-inline' https:; object-src 'none';">
+
+  <!-- SystemJS - Module loader for microfrontends -->
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.10.1/dist/system.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.10.1/dist/extras/amd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.10.1/dist/extras/named-exports.min.js"></script>
+
+  <!-- Shared dependencies - Available to all microfrontends -->
+  <script type="systemjs-importmap">
+    {
+      "imports": {
+        "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.3/lib/system/single-spa.min.js",
+        "react": "https://cdn.jsdelivr.net/npm/react@17.0.2/umd/react.production.min.js",
+        "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@17.0.2/umd/react-dom.production.min.js"
+      }
+    }
+  </script>
+
+  <!-- Development Import Map - Only loaded in local environment -->
+  <% if (isLocal) { %>
+  <script type="systemjs-importmap">
+    {
+      "imports": {
+        "@lms/root-config": "http://localhost:9000/lms-root-config.js",
+        "@lms/container": "http://localhost:9001/lms-container.js",
+        "@lms/navbar": "http://localhost:9002/lms-navbar.js",
+        "@lms/styleguide": "http://localhost:9003/lms-styleguide.js",
+        "@lms/api-client": "http://localhost:9004/lms-api-client.js",
+        "@lms/auth-app": "http://localhost:9005/lms-auth-app.js",
+        "@lms/member-portal": "http://localhost:9006/lms-member-portal.js",
+        "@lms/staff-portal": "http://localhost:9007/lms-staff-portal.js",
+        "@lms/chat-assistant": "http://localhost:9008/lms-chat-assistant.js",
+        "@lms/auth-client": "http://localhost:9010/lms-auth-client.js"
+      }
+    }
+  </script>
+  <% } %>
+
+  <!-- Production Import Map - Will be populated later -->
+  <% if (!isLocal) { %>
+  <script type="systemjs-importmap" src="/importmap.json"></script>
+  <% } %>
+
+  <!-- Import Map Overrides - Dev tool for testing different versions -->
+  <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@5.1.1/dist/import-map-overrides.js"></script>
+</head>
+<body>
+  <noscript>
+    You need to enable JavaScript to run this app.
+  </noscript>
+  
+  <!-- Main application container -->
+  <div id="single-spa-application">
+    <!-- Microfrontends will be mounted here -->
+  </div>
+  
+  <!-- Boot the root config -->
+  <script>
+    System.import('@lms/root-config');
+  </script>
+  
+  <!-- Dev tools for import map overrides (only visible in development) -->
+  <import-map-overrides-full show-when-local-storage="devtools" dev-libs></import-map-overrides-full>
+</body>
+</html>
