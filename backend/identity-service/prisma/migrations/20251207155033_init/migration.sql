@@ -1,0 +1,27 @@
+-- CreateEnum
+CREATE TYPE "Role" AS ENUM ('MEMBER', 'LIBRARIAN', 'ADMIN');
+
+-- CreateTable
+CREATE TABLE "User" (
+    "id" TEXT NOT NULL,
+    "cognitoId" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
+    "role" "Role" NOT NULL DEFAULT 'MEMBER',
+    "name" TEXT NOT NULL,
+    "address" TEXT,
+    "age" INTEGER,
+    "nic" TEXT,
+    "phone" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_cognitoId_key" ON "User"("cognitoId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_nic_key" ON "User"("nic");

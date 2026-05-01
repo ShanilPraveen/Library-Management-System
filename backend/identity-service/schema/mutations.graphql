@@ -1,0 +1,23 @@
+input RegisterUserInput {
+  username: String!
+  name: String!
+  role: Role!
+  address: String
+  age: Int
+  nic: String
+  phone: String
+  temporaryPassword: String!  
+}
+
+input UpdateUserInput {
+  name: String
+  address: String
+  age: Int
+  nic: String
+  phone: String
+}
+
+extend type Mutation {
+  registerUser(input: RegisterUserInput!): User!
+  updateUser(id: ID!, input: UpdateUserInput!): User!
+}

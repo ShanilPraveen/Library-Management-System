@@ -1,0 +1,18 @@
+type User @key(fields: "id") {
+  id: ID!
+  cognitoId: String!
+  username: String!
+  role: Role!
+  name: String!
+  address: String
+  age: Int
+  nic: String
+  phone: String
+  createdAt: String!
+}
+
+enum Role {
+  MEMBER
+  LIBRARIAN
+  ADMIN
+}

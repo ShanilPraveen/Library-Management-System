@@ -1,0 +1,8 @@
+extend type Query {
+    getUser(id: ID!): User
+    getAllUsers: [User!]!
+    getUsersByRole(role: Role!): [User!]!
+    getTotalUsersByRole(role: Role!): Int!
+    searchUsersByName(name: String!): [User!]!
+}
+
