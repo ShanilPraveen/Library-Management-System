@@ -1,0 +1,37 @@
+{
+  "routes": [
+    {
+      "path": "/",
+      "app": "@lms/auth-app",
+      "protected": false,
+      "exact": true
+    },
+    {
+      "path": "/login",
+      "app": "@lms/auth-app",
+      "protected": false
+    },
+    {
+      "path": "/reset-password",
+      "app": "@lms/auth-app",
+      "protected": false
+    },
+    {
+      "path": "/set-new-password",
+      "app": "@lms/auth-app",
+      "protected": false
+    },
+    {
+      "path": "/dashboard",
+      "app": "@lms/member-portal",
+      "protected": true,
+      "roles": ["MEMBER"]
+    },
+    {
+      "path": "/staff",
+      "app": "@lms/staff-portal",
+      "protected": true,
+      "roles": ["LIBRARIAN", "ADMIN"]
+    }
+  ]
+}
