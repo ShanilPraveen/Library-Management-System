@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Member Portal - Library MS</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', Arial, sans-serif;
+    }
+    #member-portal-container {
+      width: 100%;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <div id="member-portal-container"></div>
+
+  <!-- SystemJS -->
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.10.1/dist/system.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.10.1/dist/extras/amd.min.js"></script>
+  
+  <!-- Import Map -->
+  <script type="systemjs-importmap">
+    {
+      "imports": {
+        "@lms/navbar": "http://localhost:9002/lms-navbar.js",
+        "@lms/member-portal": "http://localhost:9006/lms-member-portal.js",
+        "react": "https://cdn.jsdelivr.net/npm/react@17.0.2/umd/react.production.min.js",
+        "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@17.0.2/umd/react-dom.production.min.js",
+        "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.3/lib/system/single-spa.min.js",
+        "single-spa-react": "https://cdn.jsdelivr.net/npm/single-spa-react@6.0.2/lib/system/single-spa-react.min.js"
+      }
+    }
+  </script>
+
+  <script>
+    // Set mock token for testing
+    if (!localStorage.getItem('lms_token')) {
+      localStorage.setItem('lms_token', 'mock-member-token');
+    }
+
+    // Load and mount member-portal
+    System.import('@lms/member-portal').then(module => {
+      const container = document.getElementById('member-portal-container');
+      
+      // Bootstrap and mount
+      module.bootstrap({})
+        .then(() => module.mount({ domElement: container }))
+        .catch(err => {
+          console.error('Failed to mount member-portal:', err);
+          container.innerHTML = `
+            <div style="padding: 20px; color: red;">
+              <h2>Error Loading Member Portal</h2>
+              <p>${err.message}</p>
+              <p>Make sure both navbar (port 9002) and member-portal (port 9006) are running.</p>
+            </div>
+          `;
+        });
+    }).catch(err => {
+      console.error('Failed to load member-portal:', err);
+      document.getElementById('member-portal-container').innerHTML = `
+        <div style="padding: 20px; color: red;">
+          <h2>Error Loading Member Portal</h2>
+          <p>${err.message}</p>
+        </div>
+      `;
+    });
+  </script>
+</body>
+</html>
