@@ -1,0 +1,38 @@
+input CreateBookInput{
+    title: String!
+    isbn: String!
+    price: Float!
+    authorId: Int!
+}
+input UpdateBookInput{
+    title: String
+    isbn: String
+    price: Float
+    authorId: Int
+}
+
+input CreateBookRequestInput{
+    userId: String!
+    title: String!
+    author: String!
+}
+
+extend type Mutation{
+    createAuthor(name:String!):Author!
+    updateAuthor(id:Int!,name:String!):Author!  
+    deleteAuthor(id:Int!):Boolean!
+
+    createBook(input:CreateBookInput!):Book!
+    updateBook(id:Int!,input:UpdateBookInput!):Book!
+    deleteBook(id:Int!):Boolean!
+
+    createBookCopy(bookId:Int!):BookCopy!
+    createBookCopies(bookId:Int!, count:Int!):[BookCopy!]!
+    deleteBookCopy(id:ID!):Boolean!
+    markCopyAsAvailable(id:ID!):BookCopy!
+    markCopyAsUnavailable(id:ID!):BookCopy!
+    markCopyAsDamaged(id:ID!):BookCopy!
+
+    createNewBookRequest(input:CreateBookRequestInput!):NewBookRequest!
+    updateNewBookRequestStatus(id:Int!, status:RequestStatus!):NewBookRequest!
+}

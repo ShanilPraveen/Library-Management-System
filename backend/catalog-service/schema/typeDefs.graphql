@@ -1,0 +1,65 @@
+type Author @key(fields: "id") {
+    id:Int!
+    name:String!
+    books:[Book!]!
+}
+
+type Book @key(fields: "id") {
+    id:Int!
+    isbn:String!
+    title:String!
+    price:Float!    
+    authorId:Int!
+    author:Author!
+    copies:[BookCopy!]!
+}
+
+type BookCopy @key(fields: "id") {
+    id:ID!
+    bookId:Int!
+    book:Book!
+    isAvailable:Boolean!
+    isDamaged:Boolean!
+}
+
+type NewBookRequest{
+    id:Int!
+    userId:String
+    user:User
+    title:String!  
+    author:String!
+    status:RequestStatus!
+    createdAt:String!
+}
+
+type BookWithStats {
+    id: Int!
+    isbn: String!
+    title: String!
+    price: Float!
+    authorId: Int!
+    author: Author!
+    totalCopies: Int!
+    availableCopies: Int!
+    damagedCopies: Int!
+}
+
+enum RequestStatus {
+    PENDING
+    ACCEPTED
+    REJECTED
+}
+
+extend type User @key(fields: "id") {
+    id: ID! @external
+    name: String @external
+    role: Role @external
+    age: Int @external
+    phone: String @external
+}
+
+enum Role {
+    MEMBER
+    LIBRARIAN
+    ADMIN
+}

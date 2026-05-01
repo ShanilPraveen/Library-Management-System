@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Author {
+  id    Int    @id @default(autoincrement()) 
+  name  String
+  books Book[]
+}
+
+model Book {
+  id       Int    @id @default(autoincrement()) 
+  isbn     String @unique
+  title    String
+  price    Float
+  authorId Int
+  author   Author @relation(fields: [authorId], references: [id])
+  copies   BookCopy[]
+}
+
+model BookCopy {
+  id          String  @id @default(uuid()) 
+  bookId      Int
+  book        Book    @relation(fields: [bookId], references: [id])
+  isAvailable Boolean @default(true) 
+  isDamaged   Boolean @default(false)
+}
+
+model NewBookRequest {
+  id        Int           @id @default(autoincrement())
+  userId    String?      
+  title     String
+  author    String
+  status    RequestStatus @default(PENDING)
+  createdAt DateTime      @default(now())
+}
+
+enum RequestStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}

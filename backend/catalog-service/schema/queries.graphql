@@ -1,0 +1,23 @@
+extend type Query{
+    getAuthorById(id:Int!):Author
+    getAllAuthors:[Author!]!
+    searchAuthorsByName(name:String!):[Author!]!
+    searchBooksByAuthorName(name:String!):[Book!]!
+
+    getBookById(id:Int!):Book
+    getAllBooks:[Book!]!
+    getTotalBooksCount:Int!
+    searchBooksByTitle(title:String!):[Book!]!
+    getBooksByAuthorId(authorId:Int!):[Book!]!
+    searchBooksWithStats(query: String!): [BookWithStats!]!
+
+    getBookCopyById(id:ID!):BookCopy
+    getAllBookCopiesByBookId(bookId:Int!):[BookCopy!]!
+    getAvailableBookCopiesByBookId(bookId:Int!):[BookCopy!]!
+    getAllBookCopies:[BookCopy!]!
+    getTotalBookCopiesCount:Int!
+    getBookDataByBookCopyId(bookCopyId:ID!):Book!
+
+    getAllNewBookRequests:[NewBookRequest!]!
+    getAllNewBookRequestsByStatus(status:RequestStatus!):[NewBookRequest!]!
+}
