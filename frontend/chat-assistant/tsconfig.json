@@ -1,0 +1,14 @@
+{
+  "extends": "ts-config-single-spa",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "declarationDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "@lms/auth-client": ["../auth-client/src/lms-auth-client.tsx"]
+    }
+  },
+  "files": ["src/lms-chat-assistant.tsx"],
+  "include": ["src/**/*"],
+  "exclude": ["src/**/*.test*"]
+}
