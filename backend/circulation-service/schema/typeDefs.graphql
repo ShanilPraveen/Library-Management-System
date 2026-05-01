@@ -1,0 +1,70 @@
+type Borrowing{
+    id:Int!
+    userId:ID!
+    user:User! 
+    bookCopyId:ID!
+    bookCopy:BookCopy!
+    issuedDate:String!
+    dueDate:String!
+    receivedDate:String
+    isReceived:Boolean!
+    renewalStatus:RenewalStatus!
+    decidedDate:String
+    penalties:[Penalty!]!
+}
+
+enum RenewalStatus{
+    NONE
+    PENDING
+    ACCEPTED
+    REJECTED
+}
+
+type Penalty{
+    id:Int!
+    borrowingId:Int!
+    borrowing:Borrowing!
+    userId:ID!
+    user:User!
+    amount:Float!
+    reason:String!
+    isPaid:Boolean!
+    createdAt:String!
+}
+
+type Notification{
+    id:Int!
+    userId:ID!
+    user:User!
+    content:String!
+    isRead:Boolean!
+    createdAt:String!
+}
+
+type Feedback{
+    id:Int!
+    content:String!
+    isViewed:Boolean!
+    createdAt:String!
+}
+
+extend type User @key(fields: "id") {
+    id: ID! @external
+    name: String @external
+    age: Int @external
+    phone: String @external
+}
+
+extend type BookCopy @key(fields: "id") {
+    id: ID! @external
+    bookId: Int @external
+    book: Book @external
+    isAvailable: Boolean @external
+    isDamaged: Boolean @external
+}
+
+extend type Book @key(fields: "id") {
+  id: Int! @external
+  title: String @external
+  price: Float @external
+}

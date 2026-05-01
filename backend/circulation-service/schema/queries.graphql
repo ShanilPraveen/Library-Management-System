@@ -1,0 +1,27 @@
+extend type Query{
+    getBorrowingById(id:Int!):Borrowing
+    getAllBorrowings:[Borrowing!]!
+    getAllBorrowingsByUserId(userId:ID!):[Borrowing!]!
+    getActiveBorrowingsByUserId(userId:ID!):[Borrowing!]!
+    getActiveOverdueBorrowingsByUserId(userId:ID!):[Borrowing!]
+    getPendingRenewals:[Borrowing!]
+    getPendingRenewalsCount:Int!
+    getBorrowingsByRenewalStatus(status:RenewalStatus!):[Borrowing!]!
+    getBorrowingsCheckedOutToday:[Borrowing!]!
+    getOverdueBorrowingsCount:Int!
+    getRecentBorrowings(limit:Int!):[Borrowing!]!
+
+    getPenaltyById(id:Int!):Penalty
+    getAllPenalties:[Penalty!]!
+    getAllPenaltiesByUserId(userId:ID!):[Penalty!]!
+    getAllUnpaidPenaltiesByUserId(userId:ID!):[Penalty!]!
+    getTotalUnpaidPenaltiesByUserId(userId:ID!):Float!
+
+    getNotificationById(id:Int!):Notification
+    getNotificationsByUserId(userId:ID!):[Notification!]!
+    getUnreadNotificationsByUserId(userId:ID!):[Notification!]!
+
+    getAllFeedbacks:[Feedback!]!
+    getAllViewedFeedbacks:[Feedback!]!
+    getAllUnviewedFeedbacks:[Feedback!]!
+}

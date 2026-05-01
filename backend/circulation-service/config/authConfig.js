@@ -1,0 +1,49 @@
+const ROLES = {
+  ADMIN: 'ADMIN',
+  LIBRARIAN: 'LIBRARIAN',
+  MEMBER: 'MEMBER'
+};
+
+const PERMISSIONS = {
+  // Queries
+  getBorrowingById: [ROLES.ADMIN, ROLES.LIBRARIAN, ROLES.MEMBER],
+  getAllBorrowings: [ROLES.ADMIN, ROLES.LIBRARIAN],
+  getAllBorrowingsByUserId: [ROLES.ADMIN, ROLES.LIBRARIAN, ROLES.MEMBER],
+  getActiveBorrowingsByUserId: [ROLES.ADMIN, ROLES.LIBRARIAN, ROLES.MEMBER],
+  getActiveOverdueBorrowingsByUserId: [ROLES.ADMIN, ROLES.LIBRARIAN, ROLES.MEMBER],
+  getPendingRenewals: [ROLES.ADMIN, ROLES.LIBRARIAN],
+  getPendingRenewalsCount: [ROLES.ADMIN, ROLES.LIBRARIAN],
+  getBorrowingsByRenewalStatus: [ROLES.ADMIN, ROLES.LIBRARIAN],
+  getBorrowingsCheckedOutToday: [ROLES.ADMIN, ROLES.LIBRARIAN],
+  getOverdueBorrowingsCount: [ROLES.ADMIN, ROLES.LIBRARIAN],
+  getRecentBorrowings: [ROLES.ADMIN, ROLES.LIBRARIAN],
+  getPenaltyById: [ROLES.ADMIN, ROLES.LIBRARIAN, ROLES.MEMBER],
+  getAllPenalties: [ROLES.ADMIN, ROLES.LIBRARIAN],
+  getAllPenaltiesByUserId: [ROLES.ADMIN, ROLES.LIBRARIAN, ROLES.MEMBER],
+  getAllUnpaidPenaltiesByUserId: [ROLES.ADMIN, ROLES.LIBRARIAN, ROLES.MEMBER],
+  getTotalUnpaidPenaltiesByUserId: [ROLES.ADMIN, ROLES.LIBRARIAN, ROLES.MEMBER],
+  getNotificationById: [ROLES.ADMIN, ROLES.LIBRARIAN, ROLES.MEMBER],
+  getNotificationsByUserId: [ROLES.ADMIN, ROLES.LIBRARIAN, ROLES.MEMBER],
+  getUnreadNotificationsByUserId: [ROLES.ADMIN, ROLES.LIBRARIAN, ROLES.MEMBER],
+  getAllFeedbacks: [ROLES.ADMIN, ROLES.LIBRARIAN],
+  getAllViewedFeedbacks: [ROLES.ADMIN, ROLES.LIBRARIAN],
+  getAllUnviewedFeedbacks: [ROLES.ADMIN, ROLES.LIBRARIAN],
+
+  // Mutations
+  checkoutBooks: [ROLES.ADMIN, ROLES.LIBRARIAN, ROLES.MEMBER],
+  checkinBook: [ROLES.ADMIN, ROLES.LIBRARIAN],
+  requestRenewal: [ROLES.ADMIN, ROLES.LIBRARIAN, ROLES.MEMBER],
+  approveRenewal: [ROLES.ADMIN, ROLES.LIBRARIAN],
+  rejectRenewal: [ROLES.ADMIN, ROLES.LIBRARIAN],
+  createPenalty: [ROLES.ADMIN, ROLES.LIBRARIAN],
+  markPenaltyAsPaidById: [ROLES.ADMIN, ROLES.LIBRARIAN],
+  markAllPenaltiesAsPaidByUserId: [ROLES.ADMIN, ROLES.LIBRARIAN],
+  createNotification: [ROLES.ADMIN, ROLES.LIBRARIAN],
+  markNotificationAsReadById: [ROLES.ADMIN, ROLES.LIBRARIAN, ROLES.MEMBER],
+  markAllNotificationsAsReadByUserId: [ROLES.ADMIN, ROLES.LIBRARIAN, ROLES.MEMBER],
+  createFeedback: [ROLES.ADMIN, ROLES.LIBRARIAN, ROLES.MEMBER],
+  markFeedbackAsViewedById: [ROLES.ADMIN, ROLES.LIBRARIAN],
+  deleteFeedbackById: [ROLES.ADMIN, ROLES.LIBRARIAN]
+};
+
+module.exports = { PERMISSIONS, ROLES };

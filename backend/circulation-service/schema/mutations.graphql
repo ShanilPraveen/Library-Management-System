@@ -1,0 +1,47 @@
+input CheckoutInput {
+  userId: ID!  
+  bookCopyIds: [ID]! 
+}
+
+input CheckinInput {
+  borrowingId: Int!
+  isDamaged: Boolean!
+  damageAmount: Float
+  skipPenaltyCheck: Boolean
+}
+
+input CreatePenaltyInput {
+  userId: ID!  
+  borrowingId: Int!
+  amount: Float!
+  reason: String!
+}
+
+input CreateNotificationInput {
+  userId: ID!  
+  content: String!
+}
+
+input CreateFeedbackInput {
+  content: String!
+}
+
+extend type Mutation {
+  checkoutBooks(input: CheckoutInput!): [Borrowing!]!
+  checkinBook(input: CheckinInput!): Borrowing!
+  requestRenewal(borrowingId: Int!): Borrowing!
+  approveRenewal(borrowingId: Int!): Borrowing!
+  rejectRenewal(borrowingId: Int!): Borrowing!
+  
+  createPenalty(input: CreatePenaltyInput!): Penalty!
+  markPenaltyAsPaidById(id: Int!): Penalty!
+  markAllPenaltiesAsPaidByUserId(userId: ID!): Boolean!  
+  
+  createNotification(input: CreateNotificationInput!): Notification!
+  markNotificationAsReadById(id: Int!): Notification!
+  markAllNotificationsAsReadByUserId(userId: ID!): Boolean!  
+  
+  createFeedback(input: CreateFeedbackInput!): Feedback!
+  markFeedbackAsViewedById(id: Int!): Feedback!
+  deleteFeedbackById(id: Int!): Boolean!
+}

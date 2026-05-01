@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Borrowing {
+  id               Int            @id @default(autoincrement())
+  userId           String
+  bookCopyId       String
+  issuedDate       DateTime       @default(now())
+  dueDate          DateTime
+  receivedDate     DateTime?
+  isReceived       Boolean        @default(false)
+  renewalStatus    RenewalStatus  @default(NONE)
+  decidedDate      DateTime?      
+  penalties        Penalty[]
+}
+
+model Penalty {
+  id          Int       @id @default(autoincrement())
+  userId      String
+  borrowingId Int
+  borrowing   Borrowing @relation(fields: [borrowingId], references: [id])
+  amount      Float
+  reason      String
+  isPaid      Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  @@unique([borrowingId, reason])
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  content   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Feedback {
+  id        Int      @id @default(autoincrement())
+  content   String
+  isViewed   Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+enum RenewalStatus {
+  NONE      // No renewal request
+  PENDING   // Waiting for librarian decision
+  ACCEPTED  // Approved, dueDate extended
+  REJECTED  // Denied, penalties resume
+}
